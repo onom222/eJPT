@@ -26,5 +26,5 @@ Subject：
 本文
 .(このドットは、終了を示すサイン）
 
-sendmailコマンドでも同じことをすることができる
-sendmail -f 自分のメールアドレス -t 相手のメールアドレス -s ターゲットドメイン -u Fakemail -m "本文" -o tls=no
+sendEmailコマンドでも同じことをすることができる
+sendEmail -f 自分のメールアドレス -t 相手のメールアドレス -s ターゲットドメイン -u Fakemail -m "本文" -o tls=no
