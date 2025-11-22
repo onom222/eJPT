@@ -1,0 +1,33 @@
+demo : windows recons SMB nmap スクリプト
+1) pingでホストが稼働しているかを確認する
+2) nmap -sC -sV を使ってターゲットマシンのセキュリティホールの探索を行う
+3) 以下のコマンドを実行して、ターゲットマシンのバージョンとプロトコルの情報を得る
+  nmap -p 445 --script smb-protocols targetドメイン
+4) 以下のコマンドを実行して、SMBセキュリティレベルに関する情報を得る。
+  nmap -p 445 --script smb-security-mode ターゲットドメイン
+5) 以下のコマンドを実行して、SMB共有経由でシステムにログインしているユーザーを列挙する
+  ゲストログインが有効になっている場合
+  nmap -p 445 --script smb-enum-sessions ターゲットドメイン
+  ゲストログインが有効になっていない場合
+  nmap -p 445 -script smb-enum-sessions --script-args smbusername=administrator,smbpassword=smbserver_771 ターゲットドメイン
+  (subusernameとsubpasswordは認証情報を入れる）
+6) 以下のコマンドを使って利用可能なすべての共有を列挙する
+  nmap -p 445 --script smb-enum-shares ターゲットドメイン
+  （IPC$共有は、ヌルセッション接続とも言われ、このセッションを使用することでwindowsは匿名ユーザーがドメインアカウントやネットワーク共有の名前を列挙するなどの特定の操作を実行できるようにする）
+7)  以下のコマンドで、有効な資格情報を使用して、すべての共有をスキャンして、権限を確認する。
+  nmap -p 445 --script smb-enum-shares --script-args smbusername=administrator,smbpassword=smbserver_771 ターゲットドメイン
+  (subusernameとsubpasswordは認証情報を入れる）
+8) 以下のコマンドを使って、ターゲットマシン上のWindowsユーザーを列挙する
+  nmap -p 445 --script smb-enum-users --script-args smbusername=administrator,smbpassword=smbserver_771 ターゲットドメイン
+9) 以下のコマンドを使って、サーバーの統計情報を取得する
+  nmap -p 445 --script smb-server-stats --script-args smbusername=administrator,smbpassword=smbserver_771 ターゲットドメイン
+  (subusernameとsubpasswordは認証情報を入れる）
+10) ターゲットマシン上で使用可能なドメインを列挙する
+  nmap -p 445 --script smb-enum-domains --script-args smbusername=administrator,smbpassword=smbserver_771 ターゲットドメイン
+11) ターゲットマシン上で使用可能なユーザーグループを列挙する
+  nmap -p 445 --script smb-enum-groups --script-args smbusername=administrator,smbpassword=smbserver_771 ターゲットドメイン
+12) ターゲットマシン上のサービスを列挙する
+  nmap -p 445 --script smb-enum-services --script-args smbusername=administrator,smbpassword=smbserver_771 ターゲットドメイン
+13) すべての共有フォルダとドライブを列挙し、すべての共有フォルダに対してlsコマンドを実行する
+  nmap -p 445 --script smb-enum-shares,smb-ls --script-args smbusername=administrator,smbpassword=smbserver_771 ターゲットドメイン
+  
