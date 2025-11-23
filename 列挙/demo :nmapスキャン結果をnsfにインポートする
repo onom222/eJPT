@@ -1,0 +1,8 @@
+demo :nmapスキャン結果をnsfにインポートする
+1) pingを使って、ホストが稼働しているかを確認する。
+2) nmap -Pn -sC -sV -oX kaede.xml ターゲットドメイン
+3) service postgresql start && msfconsole
+4) db_statusでデータベースに接続できているかを確認する
+5) workspace -a nanaでワークスペースを作る
+6) db_import kaede.xmlでワークスペースにスキャン結果をimportする
+7) hostsとserviceでインポートできたかを確認する
