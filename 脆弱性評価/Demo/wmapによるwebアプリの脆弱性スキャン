@@ -1,0 +1,17 @@
+wmapによるwebアプリの脆弱性スキャン
+1) ターゲットシステムのIPアドレスの識別のために、ifconfigを実行する
+2) service postgresql start && msfconsoleを起動する
+3) load wmapで拡張機能をロードする
+4) 以下のコマンドで、 ターゲットIPでwmapサイトを追加する
+wmap_sites -a ターゲットIP
+5) 以下のコマンドで、ターゲットIPアドレスでターゲットサイトを追加する
+wmap_targets -t http://ターゲットIPアドレス
+6) 以下のコマンドで、利用可能なサイトを表示する
+wmap_sites -l
+7) 以下のコマンドで、定義されたターゲットのリストを表示できる
+wmap_targets -l
+8) 以下のコマンドで、webアプリの脆弱性をスキャンする
+wmap_run -t
+9) 以下のコマンドで、ターゲット上で、webアプリの脆弱性スキャンを行う
+wmap_run -e
+
