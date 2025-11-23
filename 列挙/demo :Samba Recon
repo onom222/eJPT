@@ -1,0 +1,23 @@
+demo :Samba Recon
+1) nmap -sC -sV ターゲットマシンでポートスキャンを行う
+2) 以下のコマンドを使って、Sambaサーバーのワークグループ名を特定する
+  nmap -sV -p 445 ターゲットドメイン
+3) 以下のコマンドを使って、Sambaサーバーの正確なバージョンを見つける
+  (nmapの場合）
+  nmap --script smb-os-discovery.nse -p 445 ターゲットドメイン
+  (Metasploitの場合)
+   msfconsole
+   search smb
+   use モジュール番号
+   set RHOSTS
+   exploit
+4) 以下のコマンドを使って、SambaサーバーのNetBIOSコンピュータ名を特定する
+  (nmapの場合）
+  nmap --script smb-os-discovery.nse -p 445 ターゲットドメイン
+  (nmblookupの場合）
+  nmblookup -A ターゲットドメイン
+5) 以下のコマンドを使って、Sambaサーバーで匿名接続が許可されているかを確認する
+  (smbclientの場合)
+  smbclient -L ターゲットドメイン -N
+  (rpcclientの場合）
+  rpcclient -U "" -N ターゲットドメイン
