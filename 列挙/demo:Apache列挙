@@ -1,0 +1,13 @@
+demo:Apache列挙
+1) pingでホストが稼働しているかを確認する
+2) msfconsole -qを起動する
+3) ターゲットに対して、Metasploit補助モジュールを実行する
+① apacheのバージョンを特定できる
+use auxiliary/scanner/http/http_version
+set RHOST
+run
+
+② robots.txtの中身を確認する
+use auxiliary/scanner/http/robots_txt
+set RHOSTS
+run
