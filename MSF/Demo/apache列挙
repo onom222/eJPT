@@ -1,0 +1,69 @@
+Demo apache 列挙
+1) pingでホストが稼働しているかを確認する
+2) msfconsoleを起動する
+3) ターゲットに対してモジュールを起動して行う
+① バージョンの確認する
+use auxiliary/scanner/http/http_version
+set RHOSTS
+run
+② 避けるべきものとそうではないものを見分けるモジュール
+use auxiliary/scanner/http/robots_txt
+set RHOSTS
+run
+③ HTTPヘッダーを見る時に使う
+use auxiliary/scanner/http/http_header
+set RHOSTS
+run
+
+use auxiliary/scanner/http/http_header
+set RHOSTS
+set TARGETURI /secure
+run
+
+④ ブルートフォースを使いたいとき
+use auxiliary/scanner/http/brute_dirs
+set RHOSTS
+run
+
+⑤ 特定のワードリストで、効率的にディレクトリやファイルを探索するとき
+use auxiliary/scanner/http/dir_scanner
+set RHOSTS
+set DICTIONARY /usr/share/metasploit-framework/data/wordlists/directory.txt
+run
+
+⑥ 対象のウェブサーバーがディレクトリリスティングの設定ミスを調べるとき
+use auxiliary/scanner/http/dir_listing
+set RHOSTS
+set PATH /data
+run
+
+⑦ 特定のファイルやディレクトリの存在を確認するとき
+use auxiliary/scanner/http/file_dir
+set RHOSTS
+set VERBOSE false
+run
+
+⑧ HTTP PUTメソッドが許可されているかどうかの確認
+use auxiliary/scanner/http/http_put
+set RHOSTS
+set PATH /data
+set FILENAME test.txt
+set FILEDATA
+
+⑨ ファイルが存在する場合は、wgetでファイルをダウンロードする
+wget http://ターゲット:80/data/test.txt
+cat test.txt
+
+⓾ログインしたいときに使う
+use auxiliary/scanner/http/http_login
+set RHOSTS
+set AUTH_URI /secure/
+set VERBOSE false
+run
+
+⑪ユーザーを列挙するときに使う
+use auxiliary/scanner/http/apache_userdir_enum
+use USER_FILE /usr/share/metasploit-framework/data/wordlists/common_users.txt
+set RHOSTS
+set VERBOSE false
+run
