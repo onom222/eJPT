@@ -1,0 +1,11 @@
+metasploitを使用して開いているポートを列挙し、RSYNCバナーを詳しく調べる
+1) nmapでポートスキャンを行う
+2) 以下のコマンドを実行して、RSYNCに接続する
+rsync rsync://ターゲットドメイン
+
+rsyncサーバー上のファイルに貴重な情報が含まれている
+1) flag1に書いてあったbackupwscohenでモジュールの内容を調べる
+rsync rsync://ターゲットドメイン/backupwscohen/
+2) 以下のコマンドでこれらのファイルをローカルシステムにダウンロードする
+rsync -av rsync://ターゲットドメイン/backupwscohen/ .
+3) ファイルが転送できたら、catコマンドで中身を確認する
