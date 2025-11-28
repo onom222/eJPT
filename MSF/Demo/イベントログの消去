@@ -1,0 +1,9 @@
+1) ping
+2) nmap 
+3) msfconsole
+4) search
+5) use 
+6) set 
+7) exploit
+8) meterpreter取得後、以下のコマンドを実行することで、Windows全体のイベントログを消去できる
+clearv
